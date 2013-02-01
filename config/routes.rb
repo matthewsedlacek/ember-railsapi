@@ -10,8 +10,11 @@ EmberRailsAPI::Application.routes.draw do
       request.format == mime_type
     end
   end
-
-  resources :users, :except => :edit, :constraints => FormatTest.new(:json)
+  
+  scope '/api' do
+    resources :users, :except => :edit, :constraints => FormatTest.new(:json)
+  end
+  
   get '*foo', :to => 'ember#index', :constraints => FormatTest.new(:html)
   get '/', :to => 'ember#index', :constraints => FormatTest.new(:html)
 end
